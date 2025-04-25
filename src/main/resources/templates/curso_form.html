@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:ref="@{/css/style.css}"> <!-- asi se llama el css en tymeleaft-->
+    <title>Gestion Cursos</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container" th:replace="~{fragments/header::header}"></div>
+
+            <div class="container-fluid">
+                <h2 class="text-center">[[${pageTitle}]]</h2>
+                <div class="my-3">
+                    <form th:action="@{/cursos/save}" method="post" enctype="multipart/form-data" th:object="${curso}" style="max-width: 550px; margin: 0 auto">
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="p-3">
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="descripcion">Descripcion</label>
+                                <div class="col-sm-9">
+                                    <input type="text" th:field="*{descripcion}" required minlength="2" maxlength="128" class="form-control" id="descripcion">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="estado_publicacion">Publicado</label>
+                                <div class="col-sm-9">
+                                        <input type="text" th:field="*{isPublicado}" maxlength="12" class="form-control" id="isPublicado">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="nivel">Nivel</label>
+                                <div class="col-sm-9">
+                                    <input type="text" th:field="*{nivel}" maxlength="4" class="form-control" id="nivel" >
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="titulo">Titulo</label>
+                                <div class="col-sm-9">
+                                    <input type="text" th:field="*{titulo}" required minlength="2"  class="form-control" id="titulo" >
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <input type="submit" value="Guardar" class="btn btn-primary btn-sm mr-2"/>
+                                <input type="submit" value="Cancelar" id="btnCancelar" class="btn btn-secondary btn-sm"/>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <!--boton de cancelar, funcion en JS-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnCancelar").on("click", function () {
+                window.location="[[@{/cursos}]]";
+            });
+        });
+    </script>
+    <!--Termina funcion de cancelar-->
+</body>
+</html>
