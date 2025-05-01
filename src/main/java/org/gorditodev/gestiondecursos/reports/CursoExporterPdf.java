@@ -47,7 +47,7 @@ public class CursoExporterPdf {
         }
     }
 
-    private void export(HttpServletResponse response) throws IOException {//metodo para exportar
+    public void export(HttpServletResponse response) throws IOException {//metodo para exportar
         Document document = new Document(PageSize.A4);// para elegir el tamaño de la hoja  impreimir
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -72,6 +72,6 @@ public class CursoExporterPdf {
         writeTableData(table);//escribe los datos
 
         document.add(table);//pasos importantes
-        document.close();
+        document.close();//pasos importantes
     }
 }

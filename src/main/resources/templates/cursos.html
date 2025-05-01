@@ -20,10 +20,21 @@
                     <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Cerrar">
                         <span aria-hidden="true">&times;</span>
                     </button>
-
                 </div>
             </div>
         </div>
+<!---Botones para generar pdf y excel--->
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-md-12 d-flex justify-content-start">
+                    <a th:href="@{/export/pdf}" class="btn btn-danger">Generar PDF</a>
+                    &nbsp;&nbsp;
+                    <a th:href="@{/export/excel}" class="btn btn-success">Generar Excel</a>
+                </div>
+            </div>
+        </div>
+
+
         <table class="table table-hover table-responsive-xl">
             <thead class="thead-light">
                 <tr>
