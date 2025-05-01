@@ -23,12 +23,45 @@
                 </div>
             </div>
         </div>
+<!---Implementando busqueda--->
+        <div class="container my-3">
+            <form id="searchForm"  th:action="@{/cursos}">
+                <div class="row d-flex">
+                    <div class="col-md-6 mt-2">
+                        <div class="search">
+                            <i class="fa fa-search"></i>
+                            <input type="search" name="keyword" id="keyword" th:value="${keyword}" required
+                                class="form-control" placeholder="Ingrese un nombre">
+                            <button type="submit" class="btn btn-secondary">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 input-group mt-2">
+                        <div class="input group-prepend">
+                            <label for="pageSize" class="input-group-text ">Elementos por pagina</label>
+                        </div>
+                        <select form="seachForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
+                            class="size-select" id="pageSize">
+                            <option th:each="{s : ${3,6,9}}" th:value="${s}" th:text="${s}"
+                                th:selected="${s == pageSize}">
+
+                            </option>
+                        </select>
+                    </div>
+
+
+                </div>
+            </form>
+
+        </div>
+
+
 <!---Botones para generar pdf y excel--->
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-12 d-flex justify-content-start">
                     <a th:href="@{/export/pdf}" class="btn btn-danger">Generar PDF</a>
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;<!---sirve para poner espacio entre los botones--->
                     <a th:href="@{/export/excel}" class="btn btn-success">Generar Excel</a>
                 </div>
             </div>
