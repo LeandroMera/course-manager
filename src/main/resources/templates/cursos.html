@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -23,41 +24,38 @@
                 </div>
             </div>
         </div>
-<!---Implementando busqueda--->
+
+<!---Implementando formulario de busqueda--->
         <div class="container my-3">
-            <form id="searchForm"  th:action="@{/cursos}">
+            <form id="searchForm" th:action="@{/cursos}">
                 <div class="row d-flex">
                     <div class="col-md-6 mt-2">
                         <div class="search">
                             <i class="fa fa-search"></i>
                             <input type="search" name="keyword" id="keyword" th:value="${keyword}" required
                                 class="form-control" placeholder="Ingrese un nombre">
+                            <br>
                             <button type="submit" class="btn btn-secondary">Buscar</button>
                         </div>
                     </div>
 
                     <div class="col-md-3 input-group mt-2">
-                        <div class="input group-prepend">
-                            <label for="pageSize" class="input-group-text ">Elementos por pagina</label>
+                        <div class="input-group-prepend">
+                            <label for="pageSize" class="input-group-text">Elementos por pagina</label>
                         </div>
                         <select form="seachForm" name="size" th:value="${pageSize}" onchange="changePageSize()"
                             class="size-select" id="pageSize">
-                            <option th:each="{s : ${3,6,9}}" th:value="${s}" th:text="${s}"
-                                th:selected="${s == pageSize}">
-
+                            <option th:each="s : ${ {3,6,9} }" th:value="${s}" th:text="${s}"
+                                    th:selected="${s == pageSize}">
                             </option>
                         </select>
                     </div>
 
-
                 </div>
             </form>
-
         </div>
-
-
 <!---Botones para generar pdf y excel--->
-        <div class="container">
+        <div class="container" th:if="${cursos.size() > 0}">
             <div class="row mb-3">
                 <div class="col-md-12 d-flex justify-content-start">
                     <a th:href="@{/export/pdf}" class="btn btn-danger">Generar PDF</a>
@@ -93,11 +91,22 @@
                     </td>
                 </tr>
             </tbody>
-
         </table>
     </div>
 
+    <div class="container" th:unless="${cursos.size() > 0}">
+        <span>Cursos no encontrados</span>
+    </div>
+    <!-- Area de paginacion-->
+    <nav aria-label="Pagination" th:if="${totalPages}"></nav>
 
+<!---Script para la paginacion-->
+<script type="text/javascript">
+    function changePageSize() {
+        $("#searchForm").submit();//Cuando demos cambiar pagina se ejecuta el formulario
+    }
+</script>
+<!---Termina script de paginaacion--->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 

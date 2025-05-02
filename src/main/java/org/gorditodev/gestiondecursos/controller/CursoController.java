@@ -51,7 +51,7 @@ public class CursoController {
             List<Curso> cursos = new ArrayList<>();
             Pageable paging = PageRequest.of(page -1, size);
 
-            Page<Curso> pageCursos = null;
+            Page<Curso> pageCursos;
 
             if (keyword != null) {
                 pageCursos = cursoRepository.findAll(paging);
@@ -62,19 +62,22 @@ public class CursoController {
             }
 
             cursos = pageCursos.getContent();// obtenemos el contenido
-            model.addAttribute("cursos", cursos);
-            model.addAttribute("currentPage", pageCursos.getNumber() + 1);//pbtenemos el numero de paginas mas una
-            model.addAttribute("totalPages", pageCursos.getTotalPages());//muestra el total de las paginas
-            model.addAttribute("pageSize", pageCursos.getSize());//obtiene el tamaño de la paguina
 
+            model.addAttribute("cursos", cursos);
+
+            model.addAttribute("currentPage", pageCursos.getNumber() + 1);//pbtenemos el numero de paginas mas una
+            model.addAttribute("totalItems", pageCursos.getTotalElements());//muestra el total de las paginas
+            model.addAttribute("totalPages", pageCursos.getTotalPages());//obtiene el tamaño de la paguina
+            model.addAttribute("pageSize", size);
         }catch (Exception exception) {
-            model.addAttribute("error", exception.getMessage());
-            return "cursos";
+            model.addAttribute("message", exception.getMessage());
+
         }
 
-        List<Curso> cursos = cursoRepository.findAll();
+        List<Curso> cursos;
         cursos = cursoRepository.findAll();
         model.addAttribute("cursos", cursos);
+
         return "cursos";
     }
 
