@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -31,16 +32,14 @@ public class CursoController {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @GetMapping
+    public String home(){
+        return "redirect:/cursos";
+    }
     public CursoController(CursoRepository cursoRepository) {
         this.cursoRepository = cursoRepository;
     }
 
-
-    @GetMapping
-    public String home() {
-
-        return "redirect:/cursos"; //pendiente el redirect sino sale eliminarlo
-    }
 
     @GetMapping("/cursos")
     public String listarCursos(Model model,
@@ -51,7 +50,7 @@ public class CursoController {
             List<Curso> cursos = new ArrayList<>();
             Pageable paging = PageRequest.of(page -1, size);
 
-            Page<Curso> pageCursos;
+            Page<Curso> pageCursos = null;
 
             if (keyword != null) {
                 pageCursos = cursoRepository.findAll(paging);
@@ -69,6 +68,7 @@ public class CursoController {
             model.addAttribute("totalItems", pageCursos.getTotalElements());//muestra el total de las paginas
             model.addAttribute("totalPages", pageCursos.getTotalPages());//obtiene el tamaño de la paguina
             model.addAttribute("pageSize", size);
+
         }catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());
 
@@ -84,7 +84,7 @@ public class CursoController {
     @GetMapping("/cursos/nuevo")
     public String agregarCurso(Model model) {
         Curso curso = new Curso();
-        //curso.setPublicado(true);
+        curso.setIsPublicado(String.valueOf(true));
 
         model.addAttribute("curso", curso);
         model.addAttribute("pageTitle", "Nuevo Curso");
@@ -107,14 +107,15 @@ public class CursoController {
         try {
             Curso curso = cursoRepository.findById(id).get();
 
-            model.addAttribute("pageTitle", "Editar curso:" + id);
+
             model.addAttribute("curso", curso);
+            model.addAttribute("pageTitle", "Editar curso:" + id);
             //redirectAttributes.addFlashAttribute("message", "Curso actualizado con exito");
             return "curso_form";
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/cursos";
         }
-        return "redirect:/cursos";
     }
 
 //Eliminar curso

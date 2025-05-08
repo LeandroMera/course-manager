@@ -10,11 +10,12 @@
 <body>
     <div class="container">
         <div class="container" th:replace="~{fragments/header::header}"></div>
-
+        <br>
             <div class="container-fluid">
                 <h2 class="text-center">[[${pageTitle}]]</h2>
+
                 <div class="my-3">
-                    <form th:action="@{/cursos/save}" method="post" enctype="multipart/form-data" th:object="${curso}" style="max-width: 550px; margin: 0 auto">
+                    <form th:action="@{/cursos/save}" method="post" enctype="multipart/form-data" th:object="${curso}" style="max-width: 550px; margin: 0 auto;">
                         <input type="hidden" th:field="*{id}">
 
                         <div class="p-3">
@@ -52,10 +53,7 @@
                                 <input type="submit" value="Guardar" class="btn btn-primary btn-sm mr-2"/>
                                 <input type="submit" value="Cancelar" id="btnCancelar" class="btn btn-secondary btn-sm"/>
                             </div>
-
                         </div>
-
-
                     </form>
                 </div>
             </div>
